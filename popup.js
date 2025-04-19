@@ -1,10 +1,10 @@
-var female_voices = [chrome.i18n.getMessage("f_voice_1"), chrome.i18n.getMessage("f_voice_2"), chrome.i18n.getMessage("f_voice_3"), chrome.i18n.getMessage("f_voice_4")];
-var male_voices = 	[chrome.i18n.getMessage("m_voice_1"), chrome.i18n.getMessage("m_voice_2"), chrome.i18n.getMessage("m_voice_3"), chrome.i18n.getMessage("m_voice_4")];
+var female_voices = ["* sans.", chrome.i18n.getMessage("f_voice_2"), chrome.i18n.getMessage("f_voice_3"), chrome.i18n.getMessage("f_voice_4")];
+var male_voices = 	["* Mettaton.", chrome.i18n.getMessage("m_voice_2"), chrome.i18n.getMessage("m_voice_3"), chrome.i18n.getMessage("m_voice_4")];
 
 function updateLabelLanguage() {
 	document.getElementById('label_footer').textContent = chrome.i18n.getMessage("footer");
 
-	document.getElementById('label_volume').textContent = chrome.i18n.getMessage("volume");
+	document.getElementById('label_volume').textContent = "* Volume";
 	document.getElementById('label_config_1').textContent = chrome.i18n.getMessage("config_1");
 	document.getElementById('label_config_2').textContent = chrome.i18n.getMessage("config_2");
 	document.getElementById('label_config_3').textContent = chrome.i18n.getMessage("config_3");
@@ -101,14 +101,14 @@ document.addEventListener('DOMContentLoaded', function() {
 			if (result.gender=="female") {
 				document.getElementById('v_type').className = 'voice_f';
 				document.getElementById('status').className = 'background_f';
-				document.getElementById('status').style.backgroundImage = "url('./assets/images/backgroundBubbleFemale.png')";
+				//document.getElementById('status').style.backgroundImage = "url('./assets/images/backgroundBubbleFemale.png')";
 				document.getElementById('female').style.backgroundImage = "url('./assets/images/female_on.png')";
 				document.getElementById('male').style.backgroundImage = "url('./assets/images/male.png')";
 			}
 			else if(result.gender=="male") {
 				document.getElementById('v_type').className = 'voice_m';
 				document.getElementById('status').className = 'background_m';
-				document.getElementById('status').style.backgroundImage = "url('./assets/images/backgroundBubbleMale.png')";
+				//document.getElementById('status').style.backgroundImage = "url('./assets/images/backgroundBubbleMale.png')";
 				document.getElementById('male').style.backgroundImage = "url('./assets/images/male_on.png')";
 				document.getElementById('female').style.backgroundImage = "url('./assets/images/female.png')";
 			}

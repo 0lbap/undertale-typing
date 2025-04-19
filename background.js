@@ -282,7 +282,18 @@ async function play_audio(audio_path, volume, random_pitch=0.0, pitch=0.0, cutof
 
 	if (!audioCtx) audioCtx = new AudioContext();
 
-	const response = await fetch(audio_path+file_type);
+	const paths = [];
+	if (g_type == "male") {
+		paths.push("assets/audio/animalese/mettaton/snd_mtt1.wav");
+		paths.push("assets/audio/animalese/mettaton/snd_mtt3.wav");
+	}
+	if (g_type == "female") {
+		paths.push("assets/audio/animalese/sans/snd_txtsans.wav");
+	}
+	
+	const randomPath = paths[Math.floor(Math.random() * paths.length)];
+	const response = await fetch(randomPath);
+
 	buffer = await audioCtx.decodeAudioData(await response.arrayBuffer());
 
 	//allow sounds on the same channel to cut eachother off.
@@ -295,7 +306,7 @@ async function play_audio(audio_path, volume, random_pitch=0.0, pitch=0.0, cutof
 
 	//apply volume gain
 	gainNode = audioCtx.createGain();
-	gainNode.gain.value = volume * vol * 0.95;
+	gainNode.gain.value = 1 * vol * 0.95;
 	gainNode.connect(audioCtx.destination);
 
 	source = audioCtx.createBufferSource();
@@ -304,12 +315,12 @@ async function play_audio(audio_path, volume, random_pitch=0.0, pitch=0.0, cutof
 	source.cutoff_channel = cutoff_channel;
 
 	//apply pitch variation and pitch shift
-	if( !(random_pitch==0 && pitch==0) || use_profile) source.detune.value = ((parseFloat(((use_profile)?sound_profile.pitch_shift:0.0)) + pitch)*100.0) + ((Math.random() * (300 + 300) - 300)*(parseFloat(((use_profile)?sound_profile.pitch_variation:0)) + random_pitch));
+	// if( !(random_pitch==0 && pitch==0) || use_profile) source.detune.value = ((parseFloat(((use_profile)?sound_profile.pitch_shift:0.0)) + pitch)*100.0) + ((Math.random() * (300 + 300) - 300)*(parseFloat(((use_profile)?sound_profile.pitch_variation:0)) + random_pitch));
 
-	if(use_profile && sound_profile.intonation!=0) {
-		source.playbackRate.setValueAtTime(source.playbackRate.value, audioCtx.currentTime);
-		source.playbackRate.exponentialRampToValueAtTime(1 + (sound_profile.intonation*0.8), audioCtx.currentTime + 0.4);
-	}
+	// if(use_profile && sound_profile.intonation!=0) {
+	// 	source.playbackRate.setValueAtTime(source.playbackRate.value, audioCtx.currentTime);
+	// 	source.playbackRate.exponentialRampToValueAtTime(1 + (sound_profile.intonation*0.8), audioCtx.currentTime + 0.4);
+	// }
 	
 	source.start();
 }
